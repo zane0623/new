@@ -1,0 +1,66 @@
+This is a website that allows students who are preparing for IGCSE tests to get a taste of what the exam will be like.
+It will have a the following pages
+- Student login page where students can:
+  - Create a new account
+  - Log in with existing credentials
+  - Reset their password if forgotten
+  - View their profile after logging in
+- Parent login page where guardians can:
+    - Create a separate parent account
+    - Link to student profiles using school ID
+    - Log in with parent credentials
+    - Reset parent account password
+    - View student progress reports
+    - Access performance dashboards
+    - Receive automated test result notifications
+- School admin login page where staff can:
+  - Create and manage staff/admin accounts
+  - Bulk import student/parent accounts
+  - Log in with admin credentials
+  - Reset admin account passwords
+  - Access system-wide performance dashboards
+  - Generate institutional reports
+  - Manage student-parent account linkages
+  - View and export system usage analytics
+  - Configure automated report scheduling
+  - Monitor test result patterns across grades
+  - Manage user permissions and access levels
+  - View security audit logs
+  - Receive system alerts and notifications
+  - Enable two-factor authentication for admin accounts
+
+- Student's main page where learners can:
+  - Select from available IGCSE subjects
+  - Launch timed practice exams that simulate real test conditions
+  - View personalized performance dashboards with historical results
+  - Track improvement trends through visual progress charts
+  - Access detailed answer explanations for completed tests
+
+- Parent's main page where guardians can:
+  - View real-time student progress updates
+  - Access detailed performance breakdowns by subject/strand
+  - Compare student results against class/school averages
+  - Manage notification preferences for test results
+  - Initiate communication requests with school staff
+  - Track student's study time investment per subject
+  - View upcoming exam schedule and preparation status
+  - Access downloadable progress reports in multiple formats
+  - Manage linked student accounts and access permissions
+  - Enable two-factor authentication for account security
+
+  - School admin's main page where staff can:
+    - Monitor real-time system health and usage metrics
+    - Manage institution-wide access controls and permissions
+    - View comprehensive audit trails of user activities
+    - Configure system-wide security policies and protocols
+    - Generate custom institutional reports with advanced filters
+    - Manage staff permissions and role-based access levels
+    - Configure automated report distribution schedules
+    - Monitor and analyze test result patterns across cohorts
+    - Manage integrations with school information systems (SIS)
+    - Perform bulk account operations and data migrations
+    - Access legal compliance and data privacy tools
+    - Handle escalated user support requests and tickets
+    - Configure system maintenance windows and updates
+    - Manage API access for third-party integrations
+    - View and manage system backup/restore operations
