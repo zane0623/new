@@ -29,9 +29,34 @@ import {
   HStack,
   Badge,
   useColorModeValue,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  IconButton,
+  Tooltip,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
 import { useAuth } from '../../context/AuthContext';
-import { FiBookOpen, FiClock, FiBarChart2, FiUser, FiCalendar, FiTrendingUp } from 'react-icons/fi';
+import { 
+  FiBookOpen, 
+  FiClock, 
+  FiBarChart2, 
+  FiUser, 
+  FiCalendar, 
+  FiTrendingUp, 
+  FiAlertCircle, 
+  FiRepeat, 
+  FiClock as FiClockOutline, 
+  FiPlayCircle, 
+  FiCheckCircle,
+  FiMoreVertical,
+  FiInfo
+} from 'react-icons/fi';
 
 // Mock data for dashboard
 const mockStats = [
@@ -66,6 +91,112 @@ const mockStats = [
     icon: FiCalendar, 
     color: 'red.500',
     helpText: 'First scheduled exam',
+  },
+];
+
+// Mock error tracking data
+const mockErrorTracking = [
+  {
+    id: 1,
+    subject: 'Mathematics',
+    concept: 'Integration by Parts',
+    frequency: 5,
+    lastEncountered: '2 days ago',
+    status: 'needs review',
+    reviewDate: 'Tomorrow',
+  },
+  {
+    id: 2,
+    subject: 'Physics',
+    concept: 'Conservation of Angular Momentum',
+    frequency: 3,
+    lastEncountered: '1 week ago',
+    status: 'in progress',
+    reviewDate: 'Today',
+  },
+  {
+    id: 3,
+    subject: 'Chemistry',
+    concept: 'Organic Compound Naming',
+    frequency: 7,
+    lastEncountered: 'Yesterday',
+    status: 'needs review',
+    reviewDate: 'In 3 days',
+  },
+  {
+    id: 4,
+    subject: 'Mathematics',
+    concept: 'Trigonometric Substitution',
+    frequency: 4,
+    lastEncountered: '3 days ago',
+    status: 'mastered',
+    reviewDate: 'Completed',
+  },
+];
+
+// Mock time management data
+const mockTimeBlocks = [
+  {
+    id: 1,
+    title: 'Review Mathematics Errors',
+    duration: 15,
+    priority: 'high',
+    status: 'pending',
+    scheduledFor: 'Today, 4:00 PM',
+  },
+  {
+    id: 2,
+    title: 'Physics Practice Problems',
+    duration: 25,
+    priority: 'medium',
+    status: 'pending',
+    scheduledFor: 'Today, 4:30 PM',
+  },
+  {
+    id: 3,
+    title: 'Break',
+    duration: 5,
+    priority: 'low',
+    status: 'pending',
+    scheduledFor: 'Today, 5:00 PM',
+  },
+  {
+    id: 4,
+    title: 'Chemistry Formula Review',
+    duration: 15,
+    priority: 'high',
+    status: 'pending',
+    scheduledFor: 'Today, 5:10 PM',
+  },
+];
+
+// AI Insights
+const mockAIInsights = [
+  {
+    id: 1,
+    type: 'improvement',
+    message: 'Your performance in Geometry has improved by 15% this week. Keep it up!',
+    actionable: false,
+  },
+  {
+    id: 2,
+    type: 'suggestion',
+    message: 'You're still struggling with Organic Chemistry naming. Consider dedicating 20 minutes to review this tomorrow.',
+    actionable: true,
+    action: 'Schedule 20 min',
+  },
+  {
+    id: 3,
+    type: 'time',
+    message: 'You tend to perform better in morning study sessions. Consider scheduling difficult topics before noon.',
+    actionable: false,
+  },
+  {
+    id: 4,
+    type: 'error',
+    message: 'Common error pattern detected in Conservation of Energy problems. View specialized practice set.',
+    actionable: true,
+    action: 'View practice',
   },
 ];
 
@@ -183,9 +314,20 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const cardBg = useColorModeValue('white', 'gray.700');
   const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleStartExam = (subject) => {
     navigate('/student/exams', { state: { selectedSubject: subject } });
+  };
+
+  const startPomodoroSession = (timeBlock) => {
+    // This would start a Pomodoro timer and track the study session
+    console.log(`Starting Pomodoro session for: ${timeBlock.title}`);
+  };
+
+  const scheduleErrorReview = (error) => {
+    // This would schedule a review session for the specific error
+    console.log(`Scheduling review for: ${error.concept}`);
   };
 
   return (
@@ -225,257 +367,461 @@ const Dashboard = () => {
         ))}
       </SimpleGrid>
 
-      {/* Main Dashboard Content */}
-      <Grid templateColumns={{ base: '1fr', lg: '2fr 1fr' }} gap={8}>
-        {/* Left Column - Subjects */}
-        <GridItem>
-          <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm" mb={8}>
-            <CardHeader pb={0}>
-              <Heading as="h2" size="md">
-                Your Subjects
-              </Heading>
-            </CardHeader>
-            <CardBody>
-              <VStack spacing={4} align="stretch">
-                {mockSubjects.map((subject) => (
-                  <Box 
-                    key={subject.id} 
-                    p={4} 
-                    borderWidth="1px" 
-                    borderColor={borderColor}
-                    borderRadius="md"
-                    _hover={{ shadow: 'md' }}
-                    transition="all 0.2s"
-                  >
-                    <Flex justify="space-between" align="center" mb={3}>
-                      <Heading as="h3" size="md">
-                        {subject.name}
-                      </Heading>
-                      <Button 
-                        colorScheme="blue" 
-                        size="sm"
-                        onClick={() => handleStartExam(subject.name)}
-                      >
-                        Practice Now
-                      </Button>
-                    </Flex>
-                    
-                    <Text mb={2}>
-                      <Text as="span" fontWeight="bold">Next Exam:</Text> {subject.nextExam} ({subject.examDate})
-                    </Text>
-                    
-                    <Flex align="center" mb={1}>
-                      <Text mr={4} minW="120px">Overall Progress:</Text>
-                      <Progress 
-                        value={subject.progress} 
-                        colorScheme={subject.progress > 70 ? "green" : subject.progress > 40 ? "yellow" : "red"} 
-                        size="sm" 
-                        borderRadius="full" 
-                        flex={1}
-                      />
-                      <Text ml={4} fontWeight="bold">
-                        {subject.progress}%
-                      </Text>
-                    </Flex>
-                    
-                    <Text fontSize="sm" color="gray.500" mt={2}>
-                      Last activity: {subject.lastActivity} • {subject.lastActivityDate}
-                    </Text>
-                  </Box>
-                ))}
-              </VStack>
-            </CardBody>
-          </Card>
+      {/* AI Insights Banner */}
+      <Card 
+        bg="blue.50" 
+        color="blue.800" 
+        borderRadius="lg" 
+        borderWidth="1px" 
+        borderColor="blue.200" 
+        shadow="sm" 
+        mb={8}
+        display={{ base: activeTab === 0 ? 'block' : 'none', lg: 'block' }}
+      >
+        <CardBody>
+          <Flex align="center" mb={2}>
+            <Icon as={FiInfo} mr={2} boxSize={5} />
+            <Heading size="sm">AI Insight</Heading>
+          </Flex>
+          <Text fontWeight="medium">{mockAIInsights[0].message}</Text>
+        </CardBody>
+      </Card>
 
-          {/* Recent Activity */}
-          <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm">
-            <CardHeader pb={0}>
-              <Heading as="h2" size="md">
-                Recent Activity
-              </Heading>
-            </CardHeader>
-            <CardBody>
-              <List spacing={3}>
-                {mockRecentActivity.map((activity) => (
-                  <ListItem 
-                    key={activity.id}
-                    p={3}
-                    borderWidth="1px"
-                    borderColor={borderColor}
-                    borderRadius="md"
-                  >
-                    <Flex align="center" justify="space-between">
-                      <Flex align="center">
-                        <Badge 
-                          colorScheme={
-                            activity.type === 'exam' 
-                              ? 'blue' 
-                              : activity.type === 'quiz' 
-                                ? 'purple' 
-                                : 'green'
-                          }
-                          mr={3}
-                          px={2}
-                          py={1}
+      {/* Main Dashboard Tabs */}
+      <Tabs 
+        isFitted 
+        variant="enclosed" 
+        colorScheme="blue" 
+        onChange={(index) => setActiveTab(index)}
+        mb={8}
+      >
+        <TabList mb="1em">
+          <Tab>Overview</Tab>
+          <Tab>Error Management</Tab>
+          <Tab>Time Management</Tab>
+          <Tab>AI Insights</Tab>
+        </TabList>
+        
+        <TabPanels>
+          {/* Overview Tab */}
+          <TabPanel p={0}>
+            {/* Main Dashboard Content */}
+            <Grid templateColumns={{ base: '1fr', lg: '2fr 1fr' }} gap={8}>
+              {/* Left Column - Subjects */}
+              <GridItem>
+                <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm" mb={8}>
+                  <CardHeader pb={0}>
+                    <Heading as="h2" size="md">
+                      Your Subjects
+                    </Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <VStack spacing={4} align="stretch">
+                      {mockSubjects.map((subject) => (
+                        <Box 
+                          key={subject.id} 
+                          p={4} 
+                          borderWidth="1px" 
+                          borderColor={borderColor}
                           borderRadius="md"
+                          _hover={{ shadow: 'md' }}
+                          transition="all 0.2s"
                         >
-                          {activity.type.toUpperCase()}
-                        </Badge>
-                        <Box>
-                          <Text fontWeight="bold">{activity.subject}</Text>
-                          <Text fontSize="sm">{activity.title}</Text>
+                          <Flex justify="space-between" align="center" mb={3}>
+                            <Heading as="h3" size="sm">{subject.name}</Heading>
+                            <HStack>
+                              <Text fontSize="sm" color="gray.500">Progress:</Text>
+                              <Badge colorScheme={
+                                subject.progress >= 80 ? 'green' : 
+                                subject.progress >= 60 ? 'blue' : 
+                                subject.progress >= 40 ? 'yellow' : 'red'
+                              }>
+                                {subject.progress}%
+                              </Badge>
+                            </HStack>
+                          </Flex>
+                          
+                          <Progress 
+                            value={subject.progress} 
+                            size="sm" 
+                            colorScheme={
+                              subject.progress >= 80 ? 'green' : 
+                              subject.progress >= 60 ? 'blue' : 
+                              subject.progress >= 40 ? 'yellow' : 'red'
+                            } 
+                            mb={3} 
+                            borderRadius="full"
+                          />
+                          
+                          <Flex justify="space-between" fontSize="sm" mb={3}>
+                            <Text color="gray.600">
+                              Last activity: {subject.lastActivity}
+                              <Text as="span" color="gray.500" ml={1}>
+                                ({subject.lastActivityDate})
+                              </Text>
+                            </Text>
+                          </Flex>
+                          
+                          <Flex justify="space-between" fontSize="sm" mb={4}>
+                            <Text color="gray.600">
+                              Next exam: {subject.nextExam}
+                              <Text as="span" color="gray.500" ml={1}>
+                                ({subject.examDate})
+                              </Text>
+                            </Text>
+                          </Flex>
+                          
+                          <Button 
+                            colorScheme="blue" 
+                            size="sm" 
+                            width="full"
+                            onClick={() => handleStartExam(subject.name)}
+                          >
+                            Practice Now
+                          </Button>
                         </Box>
-                      </Flex>
-                      <Flex align="center" direction="column">
-                        {activity.score && (
-                          <Text fontWeight="bold" color={activity.score > 80 ? "green.500" : activity.score > 60 ? "yellow.500" : "red.500"}>
-                            {activity.score}%
-                          </Text>
-                        )}
-                        {activity.duration && (
-                          <Text fontWeight="bold" color="blue.500">
-                            {activity.duration}
-                          </Text>
-                        )}
-                        <Text fontSize="xs" color="gray.500">
-                          {activity.date}
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  </ListItem>
-                ))}
-              </List>
-            </CardBody>
-          </Card>
-        </GridItem>
-
-        {/* Right Column - Upcoming Exams and Performance */}
-        <GridItem>
-          {/* Upcoming Exams */}
-          <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm" mb={8}>
-            <CardHeader pb={0}>
-              <Heading as="h2" size="md">
-                Upcoming Exams
-              </Heading>
-            </CardHeader>
-            <CardBody>
-              <VStack spacing={4} align="stretch">
-                {mockUpcomingExams.map((exam) => (
-                  <Box 
-                    key={exam.id} 
-                    p={4} 
-                    borderWidth="1px" 
-                    borderColor={borderColor}
-                    borderRadius="md"
-                    _hover={{ shadow: 'md' }}
-                    transition="all 0.2s"
-                  >
-                    <HStack spacing={4} mb={2}>
-                      <CircularProgress 
-                        value={100 - parseInt(exam.timeLeft)} 
-                        color="blue.400" 
-                        size="50px"
-                      >
-                        <CircularProgressLabel fontSize="sm">{exam.timeLeft.split(' ')[0]}d</CircularProgressLabel>
-                      </CircularProgress>
-                      <VStack align="start" spacing={0}>
-                        <Text fontWeight="bold">{exam.title}</Text>
-                        <Text fontSize="sm" color="gray.500">{exam.subject}</Text>
-                      </VStack>
-                    </HStack>
-                    <Flex justify="space-between" align="center">
-                      <Text fontSize="sm">
-                        {exam.date}
-                      </Text>
-                      <Tag 
-                        size="sm" 
-                        colorScheme={
-                          exam.difficulty === 'Hard' 
-                            ? 'red' 
-                            : exam.difficulty === 'Medium' 
-                              ? 'yellow' 
-                              : 'green'
-                        }
-                      >
-                        {exam.difficulty}
-                      </Tag>
-                    </Flex>
-                  </Box>
-                ))}
-              </VStack>
-              <Button colorScheme="blue" variant="outline" size="sm" width="full" mt={4}>
-                View All Exams
-              </Button>
-            </CardBody>
-          </Card>
-
-          {/* Performance Summary */}
-          <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm">
-            <CardHeader pb={0}>
-              <Heading as="h2" size="md">
-                Performance Summary
-              </Heading>
-            </CardHeader>
-            <CardBody>
-              <VStack spacing={6} align="center">
-                <CircularProgress 
-                  value={82} 
-                  color="green.400" 
-                  size="180px"
-                  thickness="8px"
-                >
-                  <CircularProgressLabel>
-                    <VStack spacing={0}>
-                      <Text fontSize="3xl" fontWeight="bold">82%</Text>
-                      <Text fontSize="sm">Overall</Text>
+                      ))}
                     </VStack>
-                  </CircularProgressLabel>
-                </CircularProgress>
+                  </CardBody>
+                </Card>
+              </GridItem>
+
+              {/* Right Column - Activity & Upcoming */}
+              <GridItem>
+                {/* Recent Activity */}
+                <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm" mb={8}>
+                  <CardHeader pb={0}>
+                    <Heading as="h2" size="md">
+                      Recent Activity
+                    </Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <List spacing={3}>
+                      {mockRecentActivity.map((activity) => (
+                        <ListItem key={activity.id}>
+                          <Flex align="center">
+                            <Tag 
+                              size="md" 
+                              colorScheme={
+                                activity.type === 'exam' ? 'red' : 
+                                activity.type === 'quiz' ? 'orange' : 'green'
+                              }
+                              mr={3}
+                            >
+                              {activity.type.toUpperCase()}
+                            </Tag>
+                            <Box flex="1">
+                              <Text fontWeight="medium">
+                                {activity.title}
+                              </Text>
+                              <Text fontSize="sm" color="gray.500">
+                                {activity.subject} • {activity.date}
+                              </Text>
+                            </Box>
+                            {activity.score && (
+                              <Badge colorScheme={
+                                activity.score >= 80 ? 'green' : 
+                                activity.score >= 70 ? 'blue' : 
+                                activity.score >= 60 ? 'yellow' : 'red'
+                              }>
+                                {activity.score}%
+                              </Badge>
+                            )}
+                            {activity.duration && (
+                              <Badge colorScheme="green">
+                                {activity.duration}
+                              </Badge>
+                            )}
+                          </Flex>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </CardBody>
+                </Card>
+
+                {/* Upcoming Exams */}
+                <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm">
+                  <CardHeader pb={0}>
+                    <Heading as="h2" size="md">
+                      Upcoming Exams
+                    </Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <List spacing={3}>
+                      {mockUpcomingExams.map((exam) => (
+                        <ListItem key={exam.id}>
+                          <Box 
+                            p={3} 
+                            borderWidth="1px" 
+                            borderColor={borderColor}
+                            borderRadius="md"
+                          >
+                            <Flex justify="space-between" align="center" mb={1}>
+                              <Heading as="h3" size="sm">{exam.title}</Heading>
+                              <Badge colorScheme={
+                                exam.difficulty === 'Easy' ? 'green' : 
+                                exam.difficulty === 'Medium' ? 'yellow' : 'red'
+                              }>
+                                {exam.difficulty}
+                              </Badge>
+                            </Flex>
+                            <Text fontSize="sm" color="gray.500" mb={2}>
+                              {exam.subject} • {exam.date}
+                            </Text>
+                            <HStack>
+                              <Icon as={FiClock} color="red.500" />
+                              <Text fontSize="sm" color="red.500" fontWeight="medium">
+                                {exam.timeLeft} remaining
+                              </Text>
+                            </HStack>
+                          </Box>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </CardBody>
+                </Card>
+              </GridItem>
+            </Grid>
+          </TabPanel>
+
+          {/* Error Management Tab */}
+          <TabPanel p={0}>
+            <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm" mb={6}>
+              <CardHeader>
+                <Heading as="h2" size="md">Error Management System</Heading>
+                <Text color="gray.500" mt={1}>Track and review your mistakes to turn them into learning opportunities</Text>
+              </CardHeader>
+              <CardBody>
+                <VStack spacing={4} align="stretch">
+                  {mockErrorTracking.map((error) => (
+                    <Box 
+                      key={error.id} 
+                      p={4} 
+                      borderWidth="1px" 
+                      borderColor={borderColor}
+                      borderRadius="md"
+                      _hover={{ shadow: 'md' }}
+                      transition="all 0.2s"
+                    >
+                      <Flex justify="space-between" align="center" mb={2}>
+                        <HStack>
+                          <Icon 
+                            as={FiAlertCircle} 
+                            color={
+                              error.status === 'needs review' ? 'red.500' : 
+                              error.status === 'in progress' ? 'yellow.500' : 'green.500'
+                            }
+                            boxSize={5}
+                          />
+                          <Heading as="h3" size="sm">{error.concept}</Heading>
+                        </HStack>
+                        <Badge colorScheme={
+                          error.status === 'needs review' ? 'red' : 
+                          error.status === 'in progress' ? 'yellow' : 'green'
+                        }>
+                          {error.status === 'needs review' ? 'Needs Review' : 
+                           error.status === 'in progress' ? 'In Progress' : 'Mastered'}
+                        </Badge>
+                      </Flex>
+                      
+                      <Text fontSize="sm" color="gray.600" mb={3}>
+                        <strong>Subject:</strong> {error.subject} • <strong>Frequency:</strong> {error.frequency} times • <strong>Last seen:</strong> {error.lastEncountered}
+                      </Text>
+                      
+                      <Flex justify="space-between" align="center">
+                        <HStack>
+                          <Icon as={FiCalendar} color="blue.500" />
+                          <Text fontSize="sm" color="blue.500">
+                            Next review: {error.reviewDate}
+                          </Text>
+                        </HStack>
+                        
+                        <HStack>
+                          <Tooltip label="Schedule Review Session">
+                            <IconButton
+                              icon={<FiClock />}
+                              size="sm"
+                              variant="ghost"
+                              colorScheme="blue"
+                              aria-label="Schedule review"
+                              onClick={() => scheduleErrorReview(error)}
+                            />
+                          </Tooltip>
+                          
+                          <Tooltip label="Mark as Reviewed">
+                            <IconButton
+                              icon={<FiCheckCircle />}
+                              size="sm"
+                              variant="ghost"
+                              colorScheme="green"
+                              aria-label="Mark as reviewed"
+                              isDisabled={error.status === 'mastered'}
+                            />
+                          </Tooltip>
+                          
+                          <Menu>
+                            <MenuButton
+                              as={IconButton}
+                              icon={<FiMoreVertical />}
+                              variant="ghost"
+                              size="sm"
+                            />
+                            <MenuList>
+                              <MenuItem>View details</MenuItem>
+                              <MenuItem>Practice similar questions</MenuItem>
+                              <MenuItem>View explanation</MenuItem>
+                              <MenuItem>Adjust priority</MenuItem>
+                            </MenuList>
+                          </Menu>
+                        </HStack>
+                      </Flex>
+                    </Box>
+                  ))}
+                </VStack>
+              </CardBody>
+            </Card>
+          </TabPanel>
+
+          {/* Time Management Tab */}
+          <TabPanel p={0}>
+            <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm" mb={6}>
+              <CardHeader>
+                <Heading as="h2" size="md">Time Management</Heading>
+                <Text color="gray.500" mt={1}>Optimize your study time with focused micro-sessions</Text>
+              </CardHeader>
+              <CardBody>
+                <VStack spacing={4} align="stretch">
+                  {mockTimeBlocks.map((timeBlock) => (
+                    <Box 
+                      key={timeBlock.id} 
+                      p={4} 
+                      borderWidth="1px" 
+                      borderColor={borderColor}
+                      borderRadius="md"
+                      _hover={{ shadow: 'md' }}
+                      transition="all 0.2s"
+                      bg={timeBlock.id === 3 ? 'gray.50' : cardBg}
+                    >
+                      <Flex justify="space-between" align="center" mb={2}>
+                        <HStack>
+                          <Icon 
+                            as={timeBlock.id === 3 ? FiClock : FiClockOutline} 
+                            color={
+                              timeBlock.priority === 'high' ? 'red.500' : 
+                              timeBlock.priority === 'medium' ? 'orange.500' : 'blue.500'
+                            }
+                            boxSize={5}
+                          />
+                          <Heading as="h3" size="sm">{timeBlock.title}</Heading>
+                        </HStack>
+                        <Badge colorScheme={
+                          timeBlock.priority === 'high' ? 'red' : 
+                          timeBlock.priority === 'medium' ? 'orange' : 'blue'
+                        }>
+                          {timeBlock.duration} min
+                        </Badge>
+                      </Flex>
+                      
+                      <Flex justify="space-between" align="center" mt={4}>
+                        <Text fontSize="sm" color="gray.600">
+                          {timeBlock.scheduledFor}
+                        </Text>
+                        
+                        <HStack>
+                          <Tooltip label="Start Pomodoro Timer">
+                            <IconButton
+                              icon={<FiPlayCircle />}
+                              size="sm"
+                              colorScheme="green"
+                              aria-label="Start timer"
+                              onClick={() => startPomodoroSession(timeBlock)}
+                            />
+                          </Tooltip>
+                          
+                          <Menu>
+                            <MenuButton
+                              as={IconButton}
+                              icon={<FiMoreVertical />}
+                              variant="ghost"
+                              size="sm"
+                            />
+                            <MenuList>
+                              <MenuItem>Reschedule</MenuItem>
+                              <MenuItem>Change duration</MenuItem>
+                              <MenuItem>Edit details</MenuItem>
+                              <MenuItem>Remove</MenuItem>
+                            </MenuList>
+                          </Menu>
+                        </HStack>
+                      </Flex>
+                    </Box>
+                  ))}
+                </VStack>
                 
-                <Box width="full">
-                  <Flex justify="space-between" mb={1}>
-                    <Text>Mathematics</Text>
-                    <Text fontWeight="bold">78%</Text>
-                  </Flex>
-                  <Progress value={78} colorScheme="blue" size="sm" borderRadius="full" mb={3} />
-                  
-                  <Flex justify="space-between" mb={1}>
-                    <Text>Physics</Text>
-                    <Text fontWeight="bold">65%</Text>
-                  </Flex>
-                  <Progress value={65} colorScheme="yellow" size="sm" borderRadius="full" mb={3} />
-                  
-                  <Flex justify="space-between" mb={1}>
-                    <Text>English Literature</Text>
-                    <Text fontWeight="bold">92%</Text>
-                  </Flex>
-                  <Progress value={92} colorScheme="green" size="sm" borderRadius="full" mb={3} />
-                  
-                  <Flex justify="space-between" mb={1}>
-                    <Text>Chemistry</Text>
-                    <Text fontWeight="bold">45%</Text>
-                  </Flex>
-                  <Progress value={45} colorScheme="red" size="sm" borderRadius="full" />
-                </Box>
-                
-                <Divider />
-                
-                <HStack justify="space-between" width="full">
-                  <Flex align="center">
-                    <Icon as={FiTrendingUp} color="green.500" mr={2} />
-                    <Text>Improving:</Text>
-                  </Flex>
-                  <Text fontWeight="bold">English (+8%)</Text>
-                </HStack>
-                
-                <Button colorScheme="blue" variant="outline" size="sm" width="full">
-                  View Detailed Analytics
+                <Button colorScheme="blue" mt={4} leftIcon={<FiClock />} w="full">
+                  Create New Time Block
                 </Button>
-              </VStack>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </Grid>
+              </CardBody>
+            </Card>
+          </TabPanel>
+
+          {/* AI Insights Tab */}
+          <TabPanel p={0}>
+            <Card bg={cardBg} borderWidth="1px" borderColor={borderColor} borderRadius="lg" shadow="sm" mb={6}>
+              <CardHeader>
+                <Heading as="h2" size="md">AI-Powered Insights</Heading>
+                <Text color="gray.500" mt={1}>Personalized recommendations to improve your performance</Text>
+              </CardHeader>
+              <CardBody>
+                <VStack spacing={4} align="stretch">
+                  {mockAIInsights.map((insight) => (
+                    <Box 
+                      key={insight.id} 
+                      p={4} 
+                      borderWidth="1px" 
+                      borderColor="blue.200"
+                      borderRadius="md"
+                      bg="blue.50"
+                      _hover={{ shadow: 'md' }}
+                      transition="all 0.2s"
+                    >
+                      <Flex justify="space-between" align="flex-start" mb={2}>
+                        <HStack align="flex-start">
+                          <Icon 
+                            as={
+                              insight.type === 'improvement' ? FiTrendingUp :
+                              insight.type === 'suggestion' ? FiInfo :
+                              insight.type === 'time' ? FiClock : FiAlertCircle
+                            } 
+                            color="blue.500"
+                            boxSize={5}
+                            mt={0.5}
+                          />
+                          <Text color="blue.800" fontWeight="medium">
+                            {insight.message}
+                          </Text>
+                        </HStack>
+                      </Flex>
+                      
+                      {insight.actionable && (
+                        <Flex justify="flex-end" mt={3}>
+                          <Button 
+                            size="sm" 
+                            colorScheme="blue" 
+                            variant="solid"
+                          >
+                            {insight.action}
+                          </Button>
+                        </Flex>
+                      )}
+                    </Box>
+                  ))}
+                </VStack>
+              </CardBody>
+            </Card>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Container>
   );
 };

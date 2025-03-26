@@ -1,66 +1,82 @@
-This is a website that allows students who are preparing for IGCSE tests to get a taste of what the exam will be like.
-It will have a the following pages
-- Student login page where students can:
-  - Create a new account
-  - Log in with existing credentials
-  - Reset their password if forgotten
-  - View their profile after logging in
-- Parent login page where guardians can:
-    - Create a separate parent account
-    - Link to student profiles using school ID
-    - Log in with parent credentials
-    - Reset parent account password
-    - View student progress reports
-    - Access performance dashboards
-    - Receive automated test result notifications
-- School admin login page where staff can:
-  - Create and manage staff/admin accounts
-  - Bulk import student/parent accounts
-  - Log in with admin credentials
-  - Reset admin account passwords
-  - Access system-wide performance dashboards
-  - Generate institutional reports
-  - Manage student-parent account linkages
-  - View and export system usage analytics
-  - Configure automated report scheduling
-  - Monitor test result patterns across grades
-  - Manage user permissions and access levels
-  - View security audit logs
-  - Receive system alerts and notifications
-  - Enable two-factor authentication for admin accounts
+This is a website that allows students who are preparing for IGCSE tests to get a taste of what the exam will be like. The platform prioritizes simplicity, ease of use, and efficiency while providing a systematic, targeted, and adaptive practice experience.
 
-- Student's main page where learners can:
-  - Select from available IGCSE subjects
-  - Launch timed practice exams that simulate real test conditions
-  - View personalized performance dashboards with historical results
-  - Track improvement trends through visual progress charts
-  - Access detailed answer explanations for completed tests
+Key Features:
 
-- Parent's main page where guardians can:
-  - View real-time student progress updates
-  - Access detailed performance breakdowns by subject/strand
-  - Compare student results against class/school averages
-  - Manage notification preferences for test results
-  - Initiate communication requests with school staff
-  - Track student's study time investment per subject
-  - View upcoming exam schedule and preparation status
-  - Access downloadable progress reports in multiple formats
-  - Manage linked student accounts and access permissions
-  - Enable two-factor authentication for account security
+1. Student Portal
+- Simplified registration with essential information only
+- Streamlined login process with clear error messages
+- Profile management with academic preferences
+- Password recovery system
+- Personalized dashboard with:
+  - Subject selection
+  - Timed practice exams
+  - Performance tracking
+  - Error management system
+  - Study time analytics
+  - AI-driven insights and encouragement
 
-  - School admin's main page where staff can:
-    - Monitor real-time system health and usage metrics
-    - Manage institution-wide access controls and permissions
-    - View comprehensive audit trails of user activities
-    - Configure system-wide security policies and protocols
-    - Generate custom institutional reports with advanced filters
-    - Manage staff permissions and role-based access levels
-    - Configure automated report distribution schedules
-    - Monitor and analyze test result patterns across cohorts
-    - Manage integrations with school information systems (SIS)
-    - Perform bulk account operations and data migrations
-    - Access legal compliance and data privacy tools
-    - Handle escalated user support requests and tickets
-    - Configure system maintenance windows and updates
-    - Manage API access for third-party integrations
-    - View and manage system backup/restore operations
+2. Parent Portal
+- Easy account creation and student linking
+- Real-time progress monitoring
+- Performance analytics dashboard
+- Notification preferences
+- Communication tools with school staff
+- Study time tracking
+- Exam schedule viewing
+- Downloadable progress reports
+- Two-factor authentication
+
+3. School Admin Portal
+- User management system
+- Bulk account operations
+- System-wide analytics
+- Performance monitoring
+- Security management
+- Report generation
+- Audit logging
+- System configuration
+- Integration management
+- Support ticket system
+
+4. Core Learning Features
+- Error Management System:
+  - Automatic error logging
+  - AI-powered categorization
+  - Personalized practice sets
+  - Rolling review system
+- Time Management:
+  - Micro-unit task breakdown
+  - Structured study sessions
+  - Pomodoro timer integration
+  - Progress tracking
+- AI-Driven Features:
+  - Error pattern recognition
+  - Personalized learning paths
+  - Time management optimization
+  - Performance prediction
+  - Study recommendations
+  - Motivational messages
+
+5. Technical Requirements
+- Mobile-first responsive design
+- Fast loading times (<500ms API response)
+- Intuitive navigation
+- Clear visual hierarchy
+- Consistent UI/UX
+- Accessibility compliance (WCAG 2.1 AA)
+- Security best practices
+- Data privacy protection (GDPR, FERPA, COPPA)
+- Offline capabilities
+- Multi-channel notifications
+
+6. Success Metrics
+- 80% student retention rate after first test
+- 95% parent account activation rate
+- <2% failed login attempt rate
+- 90% institutional renewal rate
+- 70% error reduction rate
+- 85% time management improvement
+- System uptime of 99.9%
+- Support for 10,000 concurrent exam sessions
+
+The platform aims to help students achieve a minimum target of 60% percentile or at least a credit through rigorous, systematic, and personalized practice, while maintaining a simple and efficient user experience. The system leverages AI to provide personalized learning paths, error management, and performance optimization, ensuring each student receives targeted support for their exam preparation journey.
