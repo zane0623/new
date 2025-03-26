@@ -181,7 +181,7 @@ const mockAIInsights = [
   {
     id: 2,
     type: 'suggestion',
-    message: 'You're still struggling with Organic Chemistry naming. Consider dedicating 20 minutes to review this tomorrow.',
+    message: 'You\'re still struggling with Organic Chemistry naming. Consider dedicating 20 minutes to review this tomorrow.',
     actionable: true,
     action: 'Schedule 20 min',
   },
