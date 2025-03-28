@@ -3,9 +3,11 @@ import { ChakraProvider, Box } from '@chakra-ui/react';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import ParentDashboard from './pages/ParentDashboard';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
 import Navbar from './components/Navbar';
+import RoleSwitcher from './components/RoleSwitcher';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Protected Route Component
@@ -36,6 +38,14 @@ function AppContent() {
           } 
         />
         <Route
+          path="/parent-dashboard"
+          element={
+            <ProtectedRoute>
+              <ParentDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/courses"
           element={
             <ProtectedRoute>
@@ -45,6 +55,7 @@ function AppContent() {
         />
         {/* Add more protected routes as needed */}
       </Routes>
+      <RoleSwitcher />
     </Box>
   );
 }

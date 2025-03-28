@@ -27,6 +27,47 @@ export const AuthProvider = ({ children }) => {
 
   const verifyToken = async (token) => {
     try {
+      // For local development, we're using mock data
+      if (process.env.NODE_ENV === 'development') {
+        // Get the user type from local storage for development/testing
+        const userRole = localStorage.getItem('userRole') || 'student';
+        let mockUser;
+        
+        if (userRole === 'parent') {
+          mockUser = {
+            id: 'parent-1',
+            name: 'Parent User',
+            email: 'parent@example.com',
+            role: 'parent',
+            children: [
+              { id: 'alex', name: 'Alex Johnson', grade: '10th Grade' },
+              { id: 'emma', name: 'Emma Johnson', grade: '8th Grade' }
+            ]
+          };
+        } else if (userRole === 'teacher') {
+          mockUser = {
+            id: 'teacher-1',
+            name: 'Teacher User',
+            email: 'teacher@example.com',
+            role: 'teacher',
+            subjects: ['Mathematics', 'Physics']
+          };
+        } else {
+          mockUser = {
+            id: 'student-1',
+            name: 'Alex Johnson',
+            email: 'student@example.com',
+            role: 'student',
+            grade: '10th Grade'
+          };
+        }
+        
+        setUser(mockUser);
+        setLoading(false);
+        return;
+      }
+      
+      // API call for production
       const response = await axios.get('/api/auth/verify', {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -40,6 +81,51 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      // For development/testing purpose
+      if (process.env.NODE_ENV === 'development') {
+        let mockUser;
+        let userRole = 'student';
+        
+        // Simple logic to identify role based on email
+        if (email.includes('parent')) {
+          userRole = 'parent';
+          mockUser = {
+            id: 'parent-1',
+            name: 'Parent User',
+            email: 'parent@example.com',
+            role: 'parent',
+            children: [
+              { id: 'alex', name: 'Alex Johnson', grade: '10th Grade' },
+              { id: 'emma', name: 'Emma Johnson', grade: '8th Grade' }
+            ]
+          };
+        } else if (email.includes('teacher')) {
+          userRole = 'teacher';
+          mockUser = {
+            id: 'teacher-1',
+            name: 'Teacher User',
+            email: 'teacher@example.com',
+            role: 'teacher',
+            subjects: ['Mathematics', 'Physics']
+          };
+        } else {
+          mockUser = {
+            id: 'student-1',
+            name: 'Alex Johnson',
+            email: 'student@example.com',
+            role: 'student',
+            grade: '10th Grade'
+          };
+        }
+        
+        const mockToken = 'mock-jwt-token';
+        localStorage.setItem('token', mockToken);
+        localStorage.setItem('userRole', userRole);
+        setUser(mockUser);
+        return mockUser;
+      }
+      
+      // API call for production
       const response = await axios.post('/api/auth/login', {
         email,
         password
@@ -55,6 +141,14 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
+      // For development/testing purpose
+      if (process.env.NODE_ENV === 'development') {
+        const userRole = userData.role || 'student';
+        localStorage.setItem('userRole', userRole);
+        return { ...userData, id: 'new-user-1' };
+      }
+      
+      // API call for production
       const response = await axios.post('/api/auth/register', userData);
       return response.data.user;
     } catch (error) {
@@ -65,7 +159,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const token = localStorage.getItem('token');
-      if (token) {
+      if (token && process.env.NODE_ENV !== 'development') {
         await axios.post('/api/auth/logout', null, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -74,7 +168,16 @@ export const AuthProvider = ({ children }) => {
       console.error('Logout error:', error);
     } finally {
       localStorage.removeItem('token');
+      localStorage.removeItem('userRole');
       setUser(null);
+    }
+  };
+
+  // For testing purposes, enable role switching in development
+  const switchRole = (role) => {
+    if (process.env.NODE_ENV === 'development') {
+      localStorage.setItem('userRole', role);
+      window.location.reload();
     }
   };
 
@@ -83,7 +186,8 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     register,
-    logout
+    logout,
+    switchRole
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

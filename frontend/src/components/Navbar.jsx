@@ -22,7 +22,16 @@ import {
   Collapse
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaChalkboardTeacher, FaBook, FaGraduationCap } from 'react-icons/fa';
+import { 
+  FaBars, 
+  FaTimes, 
+  FaUser, 
+  FaSignOutAlt, 
+  FaChalkboardTeacher, 
+  FaBook, 
+  FaGraduationCap, 
+  FaUserGraduate 
+} from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 
 const NavLink = ({ children, to, icon }) => (
@@ -49,9 +58,45 @@ const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   
+  // Role would normally come from the user object
+  const userRole = user?.role || 'student'; // Default to student if not specified
+  
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const getDashboardLink = () => {
+    switch(userRole) {
+      case 'parent':
+        return '/parent-dashboard';
+      case 'teacher':
+        return '/teacher-dashboard';
+      default:
+        return '/dashboard';
+    }
+  };
+
+  const getDashboardIcon = () => {
+    switch(userRole) {
+      case 'parent':
+        return FaUserGraduate;
+      case 'teacher':
+        return FaChalkboardTeacher;
+      default:
+        return FaChalkboardTeacher;
+    }
+  };
+
+  const getDashboardText = () => {
+    switch(userRole) {
+      case 'parent':
+        return 'Parent Dashboard';
+      case 'teacher':
+        return 'Teacher Dashboard';
+      default:
+        return 'Dashboard';
+    }
   };
 
   return (
@@ -79,7 +124,9 @@ const Navbar = () => {
               <NavLink to="/" icon={FaBook}>Home</NavLink>
               {user && (
                 <>
-                  <NavLink to="/dashboard" icon={FaChalkboardTeacher}>Dashboard</NavLink>
+                  <NavLink to={getDashboardLink()} icon={getDashboardIcon()}>
+                    {getDashboardText()}
+                  </NavLink>
                   <NavLink to="/courses" icon={FaBook}>Courses</NavLink>
                 </>
               )}
@@ -104,6 +151,24 @@ const Navbar = () => {
                 <MenuList>
                   <MenuItem icon={<FaUser />}>Profile</MenuItem>
                   <MenuItem icon={<FaBook />}>My Courses</MenuItem>
+                  {userRole === 'parent' && (
+                    <MenuItem 
+                      icon={<FaUserGraduate />} 
+                      as={RouterLink} 
+                      to="/parent-dashboard"
+                    >
+                      Parent Dashboard
+                    </MenuItem>
+                  )}
+                  {userRole === 'student' && (
+                    <MenuItem 
+                      icon={<FaChalkboardTeacher />} 
+                      as={RouterLink} 
+                      to="/dashboard"
+                    >
+                      Student Dashboard
+                    </MenuItem>
+                  )}
                   <MenuDivider />
                   <MenuItem icon={<FaSignOutAlt />} onClick={handleLogout}>Sign Out</MenuItem>
                 </MenuList>
@@ -127,7 +192,7 @@ const Navbar = () => {
               <NavLink to="/">Home</NavLink>
               {user && (
                 <>
-                  <NavLink to="/dashboard">Dashboard</NavLink>
+                  <NavLink to={getDashboardLink()}>{getDashboardText()}</NavLink>
                   <NavLink to="/courses">Courses</NavLink>
                 </>
               )}
