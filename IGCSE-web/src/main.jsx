@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import App from './App';
 import './index.css';
+import { AuthProvider } from './context/AuthContext';
 
 // Extend the theme to include custom colors, fonts, etc
 const theme = extendTheme({
@@ -49,8 +50,10 @@ const theme = extendTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <AuthProvider>
+      <ChakraProvider theme={theme}>
+        <App />
+      </ChakraProvider>
+    </AuthProvider>
   </React.StrictMode>
 ); 

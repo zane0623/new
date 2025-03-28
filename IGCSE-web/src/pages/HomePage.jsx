@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -16,9 +16,12 @@ import {
   SimpleGrid,
 } from '@chakra-ui/react';
 import { FiBookOpen, FiClock, FiBarChart2, FiBriefcase, FiCheckCircle } from 'react-icons/fi';
+import { FaGraduationCap, FaUsers, FaChartLine, FaBook } from 'react-icons/fa';
 
 // Hero Section Component
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       w="full"
@@ -62,34 +65,20 @@ const Hero = () => {
             </Text>
             <Stack direction={{ base: 'column', sm: 'row' }} spacing={4}>
               <Button
-                as={RouterLink}
-                to="/register"
                 size="lg"
-                colorScheme="blue"
-                bg="white"
-                color="brand.600"
-                _hover={{ bg: 'gray.100' }}
-                fontWeight="bold"
-                rounded="md"
-                px={8}
+                colorScheme="whiteAlpha"
+                onClick={() => navigate('/login')}
               >
                 Get Started
               </Button>
               <Button
-                as={RouterLink}
-                to="/login"
                 size="lg"
-                colorScheme="blue"
                 variant="outline"
-                bg="transparent"
-                borderColor="white"
                 color="white"
-                _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
-                fontWeight="bold"
-                rounded="md"
-                px={8}
+                _hover={{ bg: 'whiteAlpha.200' }}
+                onClick={() => navigate('/login')}
               >
-                Sign In
+                Learn More
               </Button>
             </Stack>
           </VStack>
@@ -116,31 +105,18 @@ const Feature = ({ title, text, icon }) => {
   return (
     <Stack
       align="center"
+      textAlign="center"
+      p={6}
       bg={useColorModeValue('white', 'gray.800')}
-      borderRadius="lg"
-      p={8}
-      boxShadow="md"
-      _hover={{ boxShadow: 'xl', transform: 'translateY(-5px)' }}
-      transition="all 0.3s"
+      rounded="xl"
+      shadow="md"
+      height="100%"
     >
-      <Flex
-        w={16}
-        h={16}
-        align="center"
-        justify="center"
-        color="white"
-        rounded="full"
-        bg="brand.600"
-        mb={4}
-      >
-        <Icon as={icon} w={8} h={8} />
-      </Flex>
-      <Text fontWeight={600} fontSize="xl">
+      <Icon as={icon} w={10} h={10} color="blue.500" />
+      <Text fontWeight="bold" fontSize="lg">
         {title}
       </Text>
-      <Text color={useColorModeValue('gray.600', 'gray.400')} align="center">
-        {text}
-      </Text>
+      <Text color="gray.600">{text}</Text>
     </Stack>
   );
 };
@@ -150,49 +126,37 @@ const Features = () => {
   return (
     <Box py={20} id="features">
       <Container maxW="container.xl">
-        <VStack spacing={12}>
-          <VStack spacing={4}>
-            <Heading as="h2" size="xl" textAlign="center">
-              Features designed for exam success
-            </Heading>
-            <Text fontSize="lg" color="gray.500" textAlign="center" maxW="3xl">
-              Our platform provides everything you need to prepare effectively for your IGCSE exams
+        <Stack spacing={12}>
+          <Stack spacing={4} textAlign="center">
+            <Heading>Why Choose Our Platform?</Heading>
+            <Text color="gray.600" fontSize="lg">
+              Comprehensive tools and features designed to support your IGCSE journey
             </Text>
-          </VStack>
+          </Stack>
 
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} width="full">
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
             <Feature
-              icon={FiBookOpen}
-              title="Realistic Exam Simulation"
-              text="Practice with timed tests that replicate the exact format and difficulty of IGCSE exams."
+              icon={FaGraduationCap}
+              title="Expert-Led Content"
+              text="Access high-quality study materials and practice questions created by experienced IGCSE teachers"
             />
             <Feature
-              icon={FiBarChart2}
-              title="Personalized Analytics"
-              text="Get detailed performance reports and identify your strengths and areas for improvement."
+              icon={FaUsers}
+              title="Personalized Learning"
+              text="Get customized study plans and recommendations based on your progress and performance"
             />
             <Feature
-              icon={FiClock}
-              title="Time Management"
-              text="Learn to pace yourself effectively with our timed practice environments."
-            />
-            <Feature
-              icon={FiBriefcase}
-              title="Subject Coverage"
-              text="Comprehensive question banks covering all IGCSE subjects and exam boards."
-            />
-            <Feature
-              icon={FiCheckCircle}
-              title="Instant Feedback"
-              text="Receive immediate scoring and detailed explanations for all practice questions."
-            />
-            <Feature
-              icon={FiBarChart2}
+              icon={FaChartLine}
               title="Progress Tracking"
-              text="Monitor improvement over time with visual progress charts and improvement metrics."
+              text="Monitor your improvement with detailed analytics and performance insights"
+            />
+            <Feature
+              icon={FaBook}
+              title="Comprehensive Resources"
+              text="Access a vast library of study materials, practice tests, and reference guides"
             />
           </SimpleGrid>
-        </VStack>
+        </Stack>
       </Container>
     </Box>
   );
@@ -200,6 +164,7 @@ const Features = () => {
 
 // How It Works Section
 const HowItWorks = () => {
+  const navigate = useNavigate();
   const steps = [
     {
       number: '01',
@@ -272,14 +237,13 @@ const HowItWorks = () => {
           </SimpleGrid>
 
           <Button
-            as={RouterLink}
-            to="/register"
             size="lg"
             colorScheme="blue"
             bg="brand.600"
             _hover={{ bg: 'brand.700' }}
             px={8}
             mt={8}
+            onClick={() => navigate('/login')}
           >
             Get Started Now
           </Button>
@@ -344,6 +308,8 @@ const Subjects = () => {
 
 // Call to Action Section
 const CallToAction = () => {
+  const navigate = useNavigate();
+
   return (
     <Box py={16} bg="brand.600">
       <Container maxW="container.xl">
@@ -363,26 +329,11 @@ const CallToAction = () => {
           </VStack>
           <HStack spacing={4}>
             <Button
-              as={RouterLink}
-              to="/register"
               size="lg"
-              bg="white"
-              color="brand.600"
-              _hover={{ bg: 'gray.100' }}
-              px={8}
-            >
-              Sign Up Free
-            </Button>
-            <Button
-              as={RouterLink}
-              to="/login"
-              size="lg"
-              variant="outline"
               colorScheme="white"
-              _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
-              px={8}
+              onClick={() => navigate('/login')}
             >
-              Login
+              Start Free Trial
             </Button>
           </HStack>
         </Stack>
@@ -437,6 +388,8 @@ const About = () => {
 
 // Main Homepage Component
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <Box>
       <Hero />

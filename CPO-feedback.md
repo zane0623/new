@@ -107,3 +107,28 @@ a. Dynamic Question Bank Updates: Regularly update the question bank by replacin
 b. Teacher-Driven Content Creation: Encourage teachers to contribute new questions through weekly question design competitions and standardized guidelines for question difficulty, topic coverage, and estimated solving time.  
 
 Key features: The platform will provide students with a personalized and systematic learning experience. This approach ensures students can learn effectively from their mistakes, progress through customized practice paths, stay motivated and focused with AI reminders and positive reinforcement, and achieve consistent improvement to meet and surpass their academic goals.
+
+-----
+
+Design Part
+
+1.	Registration and Login
+o	Comment: In the User Management Module (section 5.1), while the student portal has simplified registration, it's not clear if only the essential information (name, email, IGCSE/A - Level selection) as per our requirement is being collected. Please confirm and adjust accordingly. Also, for the login process, it should be made clear that it uses a simple username and password without excessive verification, as currently, only JWT authentication is mentioned without details on the login credentials themselves. 【Even though the introduction we already mentioned that we want it to be efficient and simplistic, I feel that in the relevant section we should emphasize on these points too】
+2.	Homepage and Introduction
+o	Comment: The product requirements document does not specifically address the minimalistic layout and clear guidance for the homepage as described. There is no mention of presenting a concise overview of the platform's purpose or emphasizing benefits with direct calls to action.
+3.	Course Access and Navigation
+o	Comment: Although the Exam Simulation Module has subject specific question banks, it doesn't mention how the courses will be clearly displayed on the dashboard or homepage as required. Also, the immediate practice options and consistent navigation element positioning across pages are not covered. 【Could this be because you are waiting for the UI guy? Should we include some minimalist sample?】
+4.	General Design Principles
+o	Comment: The product requirements document lacks details on limiting fonts, using a neutral color scheme, and leveraging whitespace to increase readability as part of the consistency and minimalism principle. There is also no mention of streamlining workflows from registration to practice to results.【Could this be because you are waiting for the UI guy? Should we include some minimalist sample?】
+
+Practice Questions Part
+
+1.	Output - Driven Learning Integration
+o	Comment: The product requirements document does not incorporate the output-driven teaching model. There is no mention of pre-lesson preparation, in-class practice features like timed problem solving challenges and interactive exercises, post-class timebound exercises, or a comprehensive feedback loop.
+2.	Precision in Layered Teaching and Training
+o	Comment: The platform's design does not currently account for the dynamic grouping of students based on performance into different tiers (remember the top tier uni, good uni tiers?). Also, there are no details on customized question sets for each tier or personalized goal - setting as per the precision in layered teaching principle.
+3.	Enhanced Time Management
+o	Comment: Although the product requirements document has a Time Management feature, it lacks the micro tasking concept of dividing tasks into very small units and structured sessions with specific time allocations for different activities like concept review, problem solving, and error analysis. 
+4.	AI - Driven Insights and Encouragement
+o	Comment: The AI driven features in the document do not cover real time insights in the form of pop up reminders for time management, motivational comments at key moments, or practical advice based on performance monitoring.
+
