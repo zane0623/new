@@ -37,7 +37,7 @@ import {
   FaTrophy 
 } from 'react-icons/fa';
 
-const Dashboard = () => {
+const StudentDashboard = () => {
   // Mock data - would come from API in a real application
   const [userData, setUserData] = useState({
     name: 'Alex Johnson',
@@ -347,4 +347,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard; 
+export default StudentDashboard; 

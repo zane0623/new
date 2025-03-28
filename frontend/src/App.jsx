@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ChakraProvider, Box } from '@chakra-ui/react';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
+import StudentDashboard from './pages/StudentDashboard';
 import ParentDashboard from './pages/ParentDashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
 import Navbar from './components/Navbar';
@@ -33,7 +34,7 @@ function AppContent() {
           path="/dashboard" 
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <StudentDashboard />
             </ProtectedRoute>
           } 
         />
@@ -42,6 +43,14 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <ParentDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher-dashboard"
+          element={
+            <ProtectedRoute>
+              <TeacherDashboard />
             </ProtectedRoute>
           }
         />

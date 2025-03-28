@@ -32,7 +32,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
-  const { register } = useAuth();
+  const { register, login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,15 +55,35 @@ const Register = () => {
     setIsLoading(true);
     
     try {
-      await register(formData);
+      // Register the user
+      const userData = await register({
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role
+      });
+      
       toast({
         title: 'Account created',
-        description: 'You can now login with your credentials',
+        description: 'Your account has been created successfully',
         status: 'success',
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
-      navigate('/login');
+      
+      // Automatically log in the user
+      const user = await login(formData.email, formData.password);
+      
+      // Navigate based on user role
+      if (user.role === 'teacher') {
+        navigate('/teacher-dashboard');
+      } else if (user.role === 'parent') {
+        navigate('/parent-dashboard');
+      } else {
+        // Default to student dashboard
+        navigate('/dashboard');
+      }
+      
     } catch (error) {
       toast({
         title: 'Registration failed',

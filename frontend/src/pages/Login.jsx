@@ -33,8 +33,17 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      await login(email, password);
-      navigate('/dashboard');
+      const user = await login(email, password);
+      
+      // Navigate based on user role
+      if (user.role === 'teacher') {
+        navigate('/teacher-dashboard');
+      } else if (user.role === 'parent') {
+        navigate('/parent-dashboard');
+      } else {
+        // Default to student dashboard
+        navigate('/dashboard');
+      }
     } catch (error) {
       toast({
         title: 'Error',
@@ -136,6 +145,24 @@ const Login = () => {
                 Create one
               </Link>
             </Text>
+            
+            {process.env.NODE_ENV === 'development' && (
+              <Box mt={4} p={3} bg="gray.50" borderRadius="md">
+                <Text fontSize="sm" fontWeight="bold" mb={1}>Development Testing Guide:</Text>
+                <Text fontSize="xs">
+                  • For student dashboard: Use any email without "teacher" or "parent" (e.g., student@example.com)
+                </Text>
+                <Text fontSize="xs">
+                  • For teacher dashboard: Use an email containing "teacher" (e.g., teacher@example.com)
+                </Text>
+                <Text fontSize="xs">
+                  • For parent dashboard: Use an email containing "parent" (e.g., parent@example.com)
+                </Text>
+                <Text fontSize="xs" mt={1} fontStyle="italic">
+                  Note: Any password will work in development mode
+                </Text>
+              </Box>
+            )}
           </Stack>
         </Stack>
       </Container>

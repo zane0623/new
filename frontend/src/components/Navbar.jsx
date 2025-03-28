@@ -169,6 +169,15 @@ const Navbar = () => {
                       Student Dashboard
                     </MenuItem>
                   )}
+                  {userRole === 'teacher' && (
+                    <MenuItem 
+                      icon={<FaChalkboardTeacher />} 
+                      as={RouterLink} 
+                      to="/teacher-dashboard"
+                    >
+                      Teacher Dashboard
+                    </MenuItem>
+                  )}
                   <MenuDivider />
                   <MenuItem icon={<FaSignOutAlt />} onClick={handleLogout}>Sign Out</MenuItem>
                 </MenuList>
