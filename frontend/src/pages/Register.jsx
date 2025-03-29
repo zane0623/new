@@ -57,7 +57,7 @@ const Register = () => {
     try {
       // Register the user
       const userData = await register({
-        name: formData.fullName,
+        fullName: formData.fullName,
         email: formData.email,
         password: formData.password,
         role: formData.role
@@ -153,6 +153,7 @@ const Register = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
+                    autocomplete="new-password"
                   />
                   <InputRightElement>
                     <IconButton
@@ -172,6 +173,7 @@ const Register = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  autocomplete="new-password"
                 />
               </FormControl>
 

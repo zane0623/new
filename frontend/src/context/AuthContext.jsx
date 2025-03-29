@@ -3,6 +3,11 @@ import axios from 'axios';
 
 // Define the API base URL
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// Force production mode when deployed, regardless of environment setting
+const IS_DEV = import.meta.env.DEV && !import.meta.env.VITE_API_URL;
+
+console.log('API URL:', API_URL);
+console.log('Is development mode:', IS_DEV);
 
 const AuthContext = createContext(null);
 
@@ -31,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   const verifyToken = async (token) => {
     try {
       // For local development, we're using mock data
-      if (process.env.NODE_ENV === 'development') {
+      if (IS_DEV) {
         // Get the user type from local storage for development/testing
         const userRole = localStorage.getItem('userRole') || 'student';
         let mockUser;
@@ -85,7 +90,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       // For development/testing purpose
-      if (process.env.NODE_ENV === 'development') {
+      if (IS_DEV) {
         let mockUser;
         let userRole = 'student';
         
@@ -145,16 +150,18 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       // For development/testing purpose
-      if (process.env.NODE_ENV === 'development') {
+      if (IS_DEV) {
         const userRole = userData.role || 'student';
         localStorage.setItem('userRole', userRole);
         return { ...userData, id: 'new-user-1' };
       }
       
+      console.log('Registering user with API:', `${API_URL}/api/auth/register`);
       // API call for production
       const response = await axios.post(`${API_URL}/api/auth/register`, userData);
       return response.data.user;
     } catch (error) {
+      console.error('Registration error:', error);
       throw new Error(error.response?.data?.error || 'Registration failed');
     }
   };
@@ -162,7 +169,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const token = localStorage.getItem('token');
-      if (token && process.env.NODE_ENV !== 'development') {
+      if (token && !IS_DEV) {
         await axios.post(`${API_URL}/api/auth/logout`, null, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -178,7 +185,7 @@ export const AuthProvider = ({ children }) => {
 
   // For testing purposes, enable role switching in development
   const switchRole = (role) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (IS_DEV) {
       localStorage.setItem('userRole', role);
       window.location.reload();
     }
