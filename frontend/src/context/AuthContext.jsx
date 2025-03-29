@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+// Define the API base URL
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
 const AuthContext = createContext(null);
 
 export const useAuth = () => {
@@ -68,7 +71,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       // API call for production
-      const response = await axios.get('/api/auth/verify', {
+      const response = await axios.get(`${API_URL}/api/auth/verify`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUser(response.data.user);
@@ -126,7 +129,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       // API call for production
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password
       });
@@ -149,7 +152,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       // API call for production
-      const response = await axios.post('/api/auth/register', userData);
+      const response = await axios.post(`${API_URL}/api/auth/register`, userData);
       return response.data.user;
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Registration failed');
@@ -160,7 +163,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const token = localStorage.getItem('token');
       if (token && process.env.NODE_ENV !== 'development') {
-        await axios.post('/api/auth/logout', null, {
+        await axios.post(`${API_URL}/api/auth/logout`, null, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
