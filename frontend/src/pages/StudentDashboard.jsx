@@ -42,7 +42,7 @@ const StudentDashboard = () => {
   const [userData, setUserData] = useState({
     name: 'Alex Johnson',
     courses: 4,
-    nextExam: 'Mathematics - May 15, 2024',
+    nextExam: 'Mathematics - 15 May 2024',
     progress: 68,
     streak: 7
   });
@@ -56,8 +56,8 @@ const StudentDashboard = () => {
   ];
 
   const upcomingExams = [
-    { id: 1, title: 'Mathematics Mock Exam', date: 'May 15, 2024', time: '10:00 AM' },
-    { id: 2, title: 'Physics Unit Test', date: 'May 22, 2024', time: '2:00 PM' }
+    { id: 1, title: 'Mathematics Mock Exam', date: '15 May 2024', time: '10:00' },
+    { id: 2, title: 'Physics Unit Test', date: '22 May 2024', time: '14:00' }
   ];
 
   const recentActivities = [

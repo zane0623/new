@@ -88,8 +88,8 @@ const TeacherDashboard = () => {
       grade: '10th Grade',
       students: 32,
       avgPerformance: 76,
-      lastClass: 'Monday, 10:00 AM',
-      nextClass: 'Wednesday, 10:00 AM',
+      lastClass: 'Monday, 10:00',
+      nextClass: 'Wednesday, 10:00',
       pendingAssignments: 8,
       units: [
         { id: 1, title: 'Algebra II', completion: 85 },
@@ -104,8 +104,8 @@ const TeacherDashboard = () => {
       grade: '11th Grade',
       students: 28,
       avgPerformance: 72,
-      lastClass: 'Tuesday, 2:00 PM',
-      nextClass: 'Thursday, 2:00 PM',
+      lastClass: 'Tuesday, 14:00',
+      nextClass: 'Thursday, 14:00',
       pendingAssignments: 5,
       units: [
         { id: 1, title: 'Mechanics', completion: 90 },
@@ -120,8 +120,8 @@ const TeacherDashboard = () => {
       grade: '9th Grade',
       students: 27,
       avgPerformance: 81,
-      lastClass: 'Monday, 1:00 PM',
-      nextClass: 'Friday, 11:00 AM',
+      lastClass: 'Monday, 13:00',
+      nextClass: 'Friday, 11:00',
       pendingAssignments: 2,
       units: [
         { id: 1, title: 'Periodic Table', completion: 100 },
@@ -136,10 +136,10 @@ const TeacherDashboard = () => {
 
   // Mock upcoming schedule
   const upcomingSchedule = [
-    { id: 1, title: 'Mathematics (10th Grade)', type: 'Class', date: 'Wednesday, May 15', time: '10:00 - 11:30 AM', location: 'Room 203' },
-    { id: 2, title: 'Physics (11th Grade)', type: 'Lab Session', date: 'Thursday, May 16', time: '2:00 - 3:30 PM', location: 'Physics Lab' },
-    { id: 3, title: 'Chemistry (9th Grade)', type: 'Class', date: 'Friday, May 17', time: '11:00 - 12:30 PM', location: 'Room 105' },
-    { id: 4, title: 'Faculty Meeting', type: 'Meeting', date: 'Friday, May 17', time: '4:00 - 5:00 PM', location: 'Conference Room' }
+    { id: 1, title: 'Mathematics (10th Grade)', type: 'Class', date: 'Wednesday, 15 May', time: '10:00 - 11:30', location: 'Room 203' },
+    { id: 2, title: 'Physics (11th Grade)', type: 'Lab Session', date: 'Thursday, 16 May', time: '14:00 - 15:30', location: 'Physics Lab' },
+    { id: 3, title: 'Chemistry (9th Grade)', type: 'Class', date: 'Friday, 17 May', time: '11:00 - 12:30', location: 'Room 105' },
+    { id: 4, title: 'Faculty Meeting', type: 'Meeting', date: 'Friday, 17 May', time: '16:00 - 17:00', location: 'Conference Room' }
   ];
 
   // Mock student data for the selected course
@@ -170,17 +170,17 @@ const TeacherDashboard = () => {
   // Mock pending assignments
   const pendingAssignments = {
     math: [
-      { id: 1, title: 'Quadratic Equations Quiz', type: 'Quiz', dueDate: 'May 12, 2024', submittedCount: 28, totalCount: 32 },
-      { id: 2, title: 'Vectors and Matrices', type: 'Homework', dueDate: 'May 14, 2024', submittedCount: 25, totalCount: 32 },
-      { id: 3, title: 'Mid-Term Test', type: 'Exam', dueDate: 'May 20, 2024', submittedCount: 0, totalCount: 32 }
+      { id: 1, title: 'Quadratic Equations Quiz', type: 'Quiz', dueDate: '12 May 2024', submittedCount: 28, totalCount: 32 },
+      { id: 2, title: 'Vectors and Matrices', type: 'Homework', dueDate: '14 May 2024', submittedCount: 25, totalCount: 32 },
+      { id: 3, title: 'Mid-Term Test', type: 'Exam', dueDate: '20 May 2024', submittedCount: 0, totalCount: 32 }
     ],
     physics: [
-      { id: 1, title: 'Newton\'s Laws Lab Report', type: 'Lab', dueDate: 'May 15, 2024', submittedCount: 22, totalCount: 28 },
-      { id: 2, title: 'Circuit Diagrams', type: 'Homework', dueDate: 'May 18, 2024', submittedCount: 19, totalCount: 28 }
+      { id: 1, title: 'Newton\'s Laws Lab Report', type: 'Lab', dueDate: '15 May 2024', submittedCount: 22, totalCount: 28 },
+      { id: 2, title: 'Circuit Diagrams', type: 'Homework', dueDate: '18 May 2024', submittedCount: 19, totalCount: 28 }
     ],
     chemistry: [
-      { id: 1, title: 'Periodic Table Quiz', type: 'Quiz', dueDate: 'May 14, 2024', submittedCount: 25, totalCount: 27 },
-      { id: 2, title: 'Chemical Reactions Lab', type: 'Lab', dueDate: 'May 19, 2024', submittedCount: 0, totalCount: 27 }
+      { id: 1, title: 'Periodic Table Quiz', type: 'Quiz', dueDate: '14 May 2024', submittedCount: 25, totalCount: 27 },
+      { id: 2, title: 'Chemical Reactions Lab', type: 'Lab', dueDate: '19 May 2024', submittedCount: 0, totalCount: 27 }
     ]
   }[selectedCourse];
 

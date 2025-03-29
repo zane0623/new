@@ -70,7 +70,7 @@ const ParentDashboard = () => {
       progress: 68,
       streak: 7,
       attendance: 92,
-      nextExam: 'Mathematics - May 15, 2024',
+      nextExam: 'Mathematics - 15 May 2024',
       alerts: 2
     },
     emma: {
@@ -82,7 +82,7 @@ const ParentDashboard = () => {
       progress: 81,
       streak: 12,
       attendance: 96,
-      nextExam: 'Biology - May 22, 2024',
+      nextExam: 'Biology - 22 May 2024',
       alerts: 0
     }
   };
@@ -106,12 +106,12 @@ const ParentDashboard = () => {
 
   const upcomingExams = {
     alex: [
-      { id: 1, title: 'Mathematics Mock Exam', date: 'May 15, 2024', time: '10:00 AM', readiness: 'Medium' },
-      { id: 2, title: 'Physics Unit Test', date: 'May 22, 2024', time: '2:00 PM', readiness: 'Low' }
+      { id: 1, title: 'Mathematics Mock Exam', date: '15 May 2024', time: '10:00', readiness: 'Medium' },
+      { id: 2, title: 'Physics Unit Test', date: '22 May 2024', time: '14:00', readiness: 'Low' }
     ],
     emma: [
-      { id: 1, title: 'Biology Mid-Term', date: 'May 22, 2024', time: '9:00 AM', readiness: 'High' },
-      { id: 2, title: 'Geography Project Due', date: 'June 5, 2024', time: '3:00 PM', readiness: 'Medium' }
+      { id: 1, title: 'Biology Mid-Term', date: '22 May 2024', time: '09:00', readiness: 'High' },
+      { id: 2, title: 'Geography Project Due', date: '5 June 2024', time: '15:00', readiness: 'Medium' }
     ]
   }[selectedChild];
 
