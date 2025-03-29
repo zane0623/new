@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { db } = require('./init');
+const { client } = require('./init');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // In production, use environment variable
 
@@ -11,8 +11,12 @@ const userService = {
     
     try {
       // Check if user already exists
-      const existingUser = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
-      if (existingUser) {
+      const existingUserResult = await client.execute({
+        sql: 'SELECT * FROM users WHERE email = ?',
+        args: [email]
+      });
+      
+      if (existingUserResult.rows.length > 0) {
         throw new Error('User already exists');
       }
 
@@ -20,17 +24,19 @@ const userService = {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Insert user
-      const stmt = db.prepare(`
-        INSERT INTO users (fullName, email, password, role)
-        VALUES (?, ?, ?, ?)
-      `);
-
-      const result = stmt.run(fullName, email, hashedPassword, role);
+      const result = await client.execute({
+        sql: `INSERT INTO users (fullName, email, password, role)
+              VALUES (?, ?, ?, ?)`,
+        args: [fullName, email, hashedPassword, role]
+      });
       
       // Get created user (without password)
-      const user = db.prepare('SELECT id, fullName, email, role FROM users WHERE id = ?').get(result.lastInsertRowid);
+      const userResult = await client.execute({
+        sql: 'SELECT id, fullName, email, role FROM users WHERE rowid = last_insert_rowid()',
+        args: []
+      });
       
-      return user;
+      return userResult.rows[0];
     } catch (error) {
       throw error;
     }
@@ -40,11 +46,16 @@ const userService = {
   loginUser: async (email, password) => {
     try {
       // Get user
-      const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+      const userResult = await client.execute({
+        sql: 'SELECT * FROM users WHERE email = ?',
+        args: [email]
+      });
       
-      if (!user) {
+      if (userResult.rows.length === 0) {
         throw new Error('Invalid credentials');
       }
+
+      const user = userResult.rows[0];
 
       // Check password
       const isValidPassword = await bcrypt.compare(password, user.password);
@@ -63,12 +74,11 @@ const userService = {
       const expiresAt = new Date();
       expiresAt.setHours(expiresAt.getHours() + 24);
 
-      const stmt = db.prepare(`
-        INSERT INTO sessions (userId, token, expiresAt)
-        VALUES (?, ?, ?)
-      `);
-
-      stmt.run(user.id, token, expiresAt.toISOString());
+      await client.execute({
+        sql: `INSERT INTO sessions (userId, token, expiresAt)
+              VALUES (?, ?, ?)`,
+        args: [user.id, token, expiresAt.toISOString()]
+      });
 
       // Return user data and token (without password)
       const { password: _, ...userWithoutPassword } = user;
@@ -85,23 +95,28 @@ const userService = {
   verifyToken: async (token) => {
     try {
       // Check if token exists in sessions and is not expired
-      const session = db.prepare(`
-        SELECT * FROM sessions 
-        WHERE token = ? AND expiresAt > datetime('now')
-      `).get(token);
+      const sessionResult = await client.execute({
+        sql: `SELECT * FROM sessions 
+              WHERE token = ? AND expiresAt > datetime('now')`,
+        args: [token]
+      });
 
-      if (!session) {
+      if (sessionResult.rows.length === 0) {
         throw new Error('Invalid or expired token');
       }
 
       const decoded = jwt.verify(token, JWT_SECRET);
-      const user = db.prepare('SELECT id, fullName, email, role FROM users WHERE id = ?').get(decoded.userId);
+      
+      const userResult = await client.execute({
+        sql: 'SELECT id, fullName, email, role FROM users WHERE id = ?',
+        args: [decoded.userId]
+      });
 
-      if (!user) {
+      if (userResult.rows.length === 0) {
         throw new Error('User not found');
       }
 
-      return user;
+      return userResult.rows[0];
     } catch (error) {
       throw error;
     }
@@ -110,8 +125,10 @@ const userService = {
   // Logout user
   logoutUser: async (token) => {
     try {
-      const stmt = db.prepare('DELETE FROM sessions WHERE token = ?');
-      stmt.run(token);
+      await client.execute({
+        sql: 'DELETE FROM sessions WHERE token = ?',
+        args: [token]
+      });
       return true;
     } catch (error) {
       throw error;
