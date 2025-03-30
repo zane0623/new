@@ -125,7 +125,7 @@ const ParentDashboard = () => {
     emma: [
       { id: 1, title: 'Completed English Essay', time: '1 day ago', score: 'A-' },
       { id: 2, title: 'Geography Map Quiz', time: '3 days ago', score: '92%' },
-      { id: 3, title: 'Mathematics Practice Test', time: '4 days ago', score: '85%' }
+      { id: 3, title: 'Mathematics Practise Test', time: '4 days ago', score: '85%' }
     ]
   }[selectedChild];
 

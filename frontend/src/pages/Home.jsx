@@ -75,13 +75,13 @@ const Home = () => {
                   color={useColorModeValue('gray.800', 'white')}
                   lineHeight="shorter"
                 >
-                  Excel in Your IGCSE Exams with Personalized Preparation
+                  Excel in Your IGCSE Exams with Personalised Preparation
                 </Heading>
                 <Text
                   fontSize="xl"
                   color={useColorModeValue('gray.600', 'gray.400')}
                 >
-                  Realistic test simulations, AI-driven personalized learning paths, and comprehensive progress tracking to maximize your academic success.
+                  Realistic test simulations, AI-driven personalised learning paths, and comprehensive progress tracking to maximise your academic success.
                 </Text>
                 <Stack direction={{ base: 'column', sm: 'row' }} spacing={4} w={{ base: '100%', sm: 'auto' }}>
                   <Button
@@ -149,17 +149,17 @@ const Home = () => {
               <Feature
                 icon={FaBook}
                 title="Realistic Exam Simulations"
-                text="Practice with exam-style questions that mirror the format, difficulty, and time constraints of actual IGCSE exams."
+                text="Practise with exam-style questions that mirror the format, difficulty, and time constraints of actual IGCSE exams."
               />
               <Feature
                 icon={FaChartLine}
-                title="Personalized Learning Paths"
+                title="Personalised Learning Paths"
                 text="AI-driven learning paths that adapt to your performance, focusing on areas that need improvement."
               />
               <Feature
                 icon={FaClock}
                 title="Time Management Tools"
-                text="Structured study sessions with time tracking to help you optimize your study habits and exam time allocation."
+                text="Structured study sessions with time tracking to help you optimise your study habits and exam time allocation."
               />
               <Feature
                 icon={FaUserFriends}
@@ -272,14 +272,14 @@ const Home = () => {
               <VStack align="start" spacing={4}>
                 <Heading size="md">IGCSE Prep</Heading>
                 <Text color={useColorModeValue('gray.600', 'gray.400')}>
-                  Empowering students to excel in their IGCSE exams through personalized preparation.
+                  Empowering students to excel in their IGCSE exams through personalised preparation.
                 </Text>
               </VStack>
             </GridItem>
             <GridItem>
               <VStack align="start" spacing={4}>
                 <Heading size="sm">Resources</Heading>
-                <Link>Practice Tests</Link>
+                <Link>Practise Tests</Link>
                 <Link>Study Guides</Link>
                 <Link>Past Papers</Link>
                 <Link>Revision Tips</Link>

@@ -41,7 +41,7 @@ const Courses = () => {
     {
       id: 2,
       title: 'Physics (0625)',
-      description: 'Comprehensive IGCSE Physics course with interactive experiments and practice questions.',
+      description: 'Comprehensive IGCSE Physics course with interactive experiments and practise questions.',
       level: 'IGCSE',
       progress: 62,
       nextLesson: 'Electric Circuits',
