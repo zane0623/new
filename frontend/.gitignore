@@ -54,3 +54,4 @@ build
 .cache
 .eslintcache
 .stylelintcache
+.vercel
