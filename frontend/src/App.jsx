@@ -7,6 +7,7 @@ import ParentDashboard from './pages/ParentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
+import ExamSimulation from './pages/ExamSimulation';
 import Navbar from './components/Navbar';
 import RoleSwitcher from './components/RoleSwitcher';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -59,6 +60,14 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <Courses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/exam-simulation"
+          element={
+            <ProtectedRoute>
+              <ExamSimulation />
             </ProtectedRoute>
           }
         />

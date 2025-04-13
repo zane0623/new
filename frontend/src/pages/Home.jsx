@@ -86,6 +86,17 @@ const Home = () => {
                 <Stack direction={{ base: 'column', sm: 'row' }} spacing={4} w={{ base: '100%', sm: 'auto' }}>
                   <Button
                     as={RouterLink}
+                    to="/exam-simulation"
+                    size="lg"
+                    colorScheme="green"
+                    fontWeight="bold"
+                    px={8}
+                    leftIcon={<Icon as={FaClock} />}
+                  >
+                    开始模拟考试
+                  </Button>
+                  <Button
+                    as={RouterLink}
                     to="/register"
                     size="lg"
                     colorScheme="blue"
@@ -313,4 +324,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;
