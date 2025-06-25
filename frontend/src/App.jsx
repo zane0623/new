@@ -8,6 +8,8 @@ import TeacherDashboard from './pages/TeacherDashboard';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
 import ExamSimulation from './pages/ExamSimulation';
+import Assignments from './pages/Assignments';
+import About from './pages/About';
 import Navbar from './components/Navbar';
 import RoleSwitcher from './components/RoleSwitcher';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -60,6 +62,22 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <Courses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assignments"
+          element={
+            <ProtectedRoute>
+              <Assignments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <ProtectedRoute>
+              <About />
             </ProtectedRoute>
           }
         />

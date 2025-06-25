@@ -30,7 +30,10 @@ import {
   FaChalkboardTeacher, 
   FaBook, 
   FaGraduationCap, 
-  FaUserGraduate 
+  FaUserGraduate,
+  FaCompass,
+  FaTasks,
+  FaInfoCircle
 } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 
@@ -116,19 +119,19 @@ const Navbar = () => {
               <Heading size="md" color={useColorModeValue('blue.600', 'blue.200')}>
                 <Flex alignItems="center">
                   <Icon as={FaGraduationCap} mr={2} />
-                  IGCSE Prep
+                  SAT Prep
                 </Flex>
               </Heading>
             </Box>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-              <NavLink to="/" icon={FaBook}>Home</NavLink>
+              <NavLink to="/" icon={FaCompass}>导航</NavLink>
+              <NavLink to="/courses" icon={FaBook}>课程</NavLink>
+              <NavLink to="/assignments" icon={FaTasks}>作业</NavLink>
+              <NavLink to="/about" icon={FaInfoCircle}>关于我</NavLink>
               {user && (
-                <>
-                  <NavLink to={getDashboardLink()} icon={getDashboardIcon()}>
-                    {getDashboardText()}
-                  </NavLink>
-                  <NavLink to="/courses" icon={FaBook}>Courses</NavLink>
-                </>
+                <NavLink to={getDashboardLink()} icon={getDashboardIcon()}>
+                  {getDashboardText()}
+                </NavLink>
               )}
             </HStack>
           </HStack>
@@ -198,18 +201,14 @@ const Navbar = () => {
         <Collapse in={isOpen} animateOpacity>
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" icon={FaCompass}>导航</NavLink>
+              <NavLink to="/courses" icon={FaBook}>课程</NavLink>
+              <NavLink to="/assignments" icon={FaTasks}>作业</NavLink>
+              <NavLink to="/about" icon={FaInfoCircle}>关于我</NavLink>
               {user && (
-                <>
-                  <NavLink to={getDashboardLink()}>{getDashboardText()}</NavLink>
-                  <NavLink to="/courses">Courses</NavLink>
-                </>
-              )}
-              {!user && (
-                <>
-                  <NavLink to="/login">Sign In</NavLink>
-                  <NavLink to="/register">Sign Up</NavLink>
-                </>
+                <NavLink to={getDashboardLink()} icon={getDashboardIcon()}>
+                  {getDashboardText()}
+                </NavLink>
               )}
             </Stack>
           </Box>
